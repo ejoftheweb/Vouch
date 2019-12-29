@@ -19,7 +19,7 @@ import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
 
 
-public class Voucher  {
+public class Voucher implements Vouched {
     BigBinary id;
     String title;
     String tweet;
@@ -214,4 +214,8 @@ public class Voucher  {
            return id;
     }
 
+    @Override
+    public Credibility getCredibility() {
+        return null;
+    }
 }
