@@ -15,10 +15,10 @@ import uk.co.platosys.vouch.Exceptions.CredibilityException;
  * <h2>The Vouched interface </h2>
  * Anything vouched has a credibility.
  *
- * <h2>Credibility arithmetic</h2>
+ * <h2>Credibility calculus</h2>
  * A Vouched object derives its credibility from its signatories and <i>their</i> credibility. The overall
- * credibility of an object is thus the credibility attributable to each of its credibilities. Credibility arithmetic
- * determines how these values are combined. Without a rigorously developed trust algebra, the arithmetic operations
+ * credibility of an object is thus the credibility attributable to each of its credibilities. Credibility calculus
+ * determines how these values are combined. Without a rigorously developed trust algebra, the  operations
  * used to combine credibilities are essentially arbitrary.  However, whatever the underlying arithmetic, we are
  * concerned with two main operations, broadly: summation and multiplication. This is somewhat misleading
  * because arithmetic addition and multiplication will produce wrong answers.
@@ -47,15 +47,22 @@ public class Credibility {
     }
 
     /**
-     *  In version 1, this returns the Credibility with the greatest
+     *  In version 1, this returns as follows:
+     *  if both are positive, the largest;
+     *  if both are negative, the smallest;
+     *  otherwise (different signs; or one or other or both is zero): the sum.
      * @param one
      * @param two
      * @return
      */
     public static Credibility sum(Credibility one, Credibility two){
-
-        return new Credibility(Math.max(one.value, two.value));
-
+        if((one.value>0) && (two.value>0)) {
+            return new Credibility(Math.max(one.value, two.value));
+        }else if((one.value<0)&&(two.value<0)){
+            return new Credibility(Math.min(one.value, two.value));
+        }else{
+            return new Credibility((one.value+two.value));
+        }
     }
 
     public float getValue(){

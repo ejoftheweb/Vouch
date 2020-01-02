@@ -15,6 +15,8 @@ public interface Store extends LockStore {
      */
      Signature store (Voucher voucher);
      Voucher getVoucher(String voucherID) throws VoucherNotFoundException;
+     Profile getProfile(String voucherID) throws VoucherNotFoundException;
+     Group getGroup(String voucherID) throws VoucherNotFoundException;
      List<Voucher> findVouchers(String[] searchTerms);
      Lock getLock();
 

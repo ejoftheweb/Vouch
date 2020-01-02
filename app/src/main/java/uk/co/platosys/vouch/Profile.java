@@ -18,8 +18,8 @@ public class Profile extends Voucher implements Voter {
   Lock lock;
   String userID;
 
-  public Profile(){
-      super();
+  public Profile(Store store, Voucher parent){
+      super( store,  parent);
   }
 
     @Override
@@ -28,7 +28,7 @@ public class Profile extends Voucher implements Voter {
           return lock;
       }else{
           try {
-              lock = lockstore.getLock(userID);
+              lock = store.getLock(userID);
           }catch (MinigmaException mx) {
               //TODO
               return null;
