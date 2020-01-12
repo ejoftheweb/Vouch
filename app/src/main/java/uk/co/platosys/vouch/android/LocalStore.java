@@ -15,6 +15,8 @@ import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
+import uk.co.platosys.vouch.Group;
+import uk.co.platosys.vouch.Profile;
 import uk.co.platosys.vouch.Role;
 import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
@@ -48,6 +50,26 @@ public class LocalStore  implements Store  {
             //TODO
             return null;
         }
+    }
+
+    @Override
+    public Signature store(Profile profile) {
+        return null;
+    }
+
+    @Override
+    public Signature store(Group group) {
+        return null;
+    }
+
+    @Override
+    public Profile getProfile(String voucherID) throws VoucherNotFoundException {
+        return null;
+    }
+
+    @Override
+    public Group getGroup(String voucherID) throws VoucherNotFoundException {
+        return null;
     }
 
     @Override
