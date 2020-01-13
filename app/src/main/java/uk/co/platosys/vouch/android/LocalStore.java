@@ -21,6 +21,7 @@ import uk.co.platosys.vouch.Role;
 import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
+import uk.co.platosys.vouch.VoucherID;
 
 public class LocalStore  implements Store  {
     private char[] passphrase;
@@ -63,17 +64,27 @@ public class LocalStore  implements Store  {
     }
 
     @Override
-    public Profile getProfile(String voucherID) throws VoucherNotFoundException {
+    public Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException {
         return null;
     }
 
     @Override
-    public Group getGroup(String voucherID) throws VoucherNotFoundException {
+    public Group getGroup(VoucherID voucherID) throws VoucherNotFoundException {
         return null;
     }
 
     @Override
-    public Voucher getVoucher(String voucherID) throws VoucherNotFoundException {
+    public List<Profile> getProfiles(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Group> getGroups(String name) {
+        return null;
+    }
+
+    @Override
+    public Voucher getVoucher(VoucherID voucherID) throws VoucherNotFoundException {
         return null;
     }
 
