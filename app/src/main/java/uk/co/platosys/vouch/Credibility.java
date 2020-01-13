@@ -64,7 +64,10 @@ public class Credibility {
             return new Credibility((one.value+two.value));
         }
     }
-
+    public static Credibility accrue(Credibility one, Credibility two){
+        //TODO
+        return one;
+    }
     public float getValue(){
         return value;
     }

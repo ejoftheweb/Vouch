@@ -93,6 +93,11 @@ public class LocalStore  implements Store  {
         return null;
     }
 
+    @Override
+    public List<Signature> getSignatures(VoucherID voucherID) {
+        return null;
+    }
+
     /**
      * Returns this store's Lock.
      * @return

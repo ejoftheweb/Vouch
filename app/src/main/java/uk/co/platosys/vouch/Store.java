@@ -13,15 +13,33 @@ public interface Store extends LockStore {
      *
      * @param voucher
      */
-     Signature store (Voucher voucher);
+ /**
+  *
+  * @param voucher
+  * @return
+  */
+ Signature store (Voucher voucher);
+
+ /**
+  *
+  * @param profile
+  * @return
+  */
      Signature store(Profile profile);
-     Signature store (Group group);
+
+ /**
+  *
+  * @param group
+  * @return
+  */
+ Signature store (Group group);
      Voucher getVoucher(VoucherID voucherID) throws VoucherNotFoundException;
      Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException;
      Group getGroup(VoucherID voucherID) throws VoucherNotFoundException;
      List<Profile> getProfiles(String name);
      List<Group> getGroups(String name);
      List<Voucher> findVouchers(String[] searchTerms);
+     List<Signature> getSignatures(VoucherID voucherID);
      Lock getLock();
 
 }
