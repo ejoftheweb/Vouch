@@ -14,6 +14,7 @@ import uk.co.platosys.minigma.Signature;
 import uk.co.platosys.minigma.exceptions.BadPassphraseException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 import uk.co.platosys.minigma.exceptions.MinigmaOtherException;
+import uk.co.platosys.vouch.Exceptions.AlreadyPublishedException;
 import uk.co.platosys.vouch.Exceptions.VouchException;
 import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
@@ -32,18 +33,57 @@ public class Voucher implements Vouched {
     Voucher parent;
     Voucher previous;
     Voucher next;
-    String content;
+    Content content;
     Store store;
 
-    /**
-     * Instantiates an empty Voucher
+    /**Package-protected method to instantiate an empty Voucher.
      * @param store
      */
-    public Voucher(Store store, Voucher parent){
+    protected Voucher(Store store, Voucher parent){
         this.store=store;
     }
 
+    /**Static method used to get a Voucher from a store. Alternatively, call getVoucher(VoucherID) on the
+     * Store object which is all this method does.
+     * @param store
+     * @param voucherID
+     * @return
+     * @throws VoucherNotFoundException
+     */
+    public static Voucher getVoucher (Store store, VoucherID voucherID) throws VoucherNotFoundException{
+            return store.getVoucher(voucherID);
+    }
 
+    /**Static method to create a new unpublished Voucher
+     *
+     * @param store
+     * @param parent
+     * @param title
+     * @param tweet
+     * @param author
+     * @param content
+     * @return
+     */
+    public static Voucher createVoucher (Store store,
+                                         Voucher parent,
+                                         String title,
+                                         String tweet,
+                                         Self author,
+                                         Content content,
+                                         char[] passphrase)
+    throws BadPassphraseException
+    {
+            Voucher voucher = new Voucher(store, parent);
+            voucher.setTitle(title);
+            voucher.setTweet(tweet);
+            voucher.setContent(content);
+            try {
+                voucher.sign(author, Role.AUTHOR, passphrase);
+            }catch(VouchRoleException vre){
+                //TODO? should not be thrown here! debug log it at best.
+            }
+            return voucher;
+    }
     /**
      * Stores this Voucher in the store. A Voucher cannot be stored until it is signed.
      *
@@ -65,7 +105,11 @@ public class Voucher implements Vouched {
      * @param passphrase
      * @return
      */
-    public Signature sign(Self self, Role role,  char[] passphrase)throws VouchRoleException, BadPassphraseException {
+    public Signature sign(Self self,
+                          Role role,
+                          char[] passphrase)
+            throws  VouchRoleException,
+                    BadPassphraseException {
       try {
            if(id==null){
                if(!role.equals(Role.AUTHOR)){
@@ -81,7 +125,7 @@ public class Voucher implements Vouched {
            this.tags.add(tag);
            List<Notation> notations = new ArrayList<>();
            notations.add(tag.toNotation());
-           Signature signature = key.sign(content, notations, passphrase);
+           Signature signature = key.sign(content.toString(), notations, passphrase);
            this.taggers.add(self);
            signatures.add(signature);
            return signature;
@@ -94,6 +138,15 @@ public class Voucher implements Vouched {
           return null;
       }
     }
+
+    /**
+     * Tags a Voucher. Tags are always signed by the tagger.
+     * @param self
+     * @param tags
+     * @param passphrase
+     * @return
+     * @throws BadPassphraseException
+     */
     public Signature tag(Self self, List<Tag> tags, char[] passphrase) throws BadPassphraseException {
         List<Notation> notations=new ArrayList<>();
         Signature signature=null;
@@ -101,7 +154,7 @@ public class Voucher implements Vouched {
             for (Tag tag : tags) {
                 notations.add(tag.toNotation());
             }
-            signature = self.getKey().sign(content, notations, passphrase);
+            signature = self.getKey().sign(content.toString(), notations, passphrase);
         }catch(BadPassphraseException bpe){
             throw bpe;
         }catch(MinigmaOtherException moe){
@@ -123,7 +176,7 @@ public class Voucher implements Vouched {
     private void setId() {
         if (id==null) {
             try {
-                String digestedContent = parent.getId().toString() + content;
+                String digestedContent = parent.getId().toString() + content.toString();
                 this.id = Digester.digest(digestedContent);
             } catch (MinigmaException mx) {
                 //TODO
@@ -138,7 +191,7 @@ public class Voucher implements Vouched {
         return title;
     }
 
-    public void setTitle(String title) {
+   private void setTitle(String title) {
         this.title = title;
     }
 
@@ -146,7 +199,7 @@ public class Voucher implements Vouched {
         return tweet;
     }
 
-    public void setTweet(String tweet) {
+   private void setTweet(String tweet) {
         this.tweet = tweet;
     }
 
@@ -162,8 +215,18 @@ public class Voucher implements Vouched {
         return publisher;
     }
 
-    public void setPublisher(Profile publisher) {
-        this.publisher = publisher;
+    public Signature publish(Self publisher, char[] passphrase) throws AlreadyPublishedException, BadPassphraseException {
+        if (this.publisher!=null)throw new AlreadyPublishedException("voucher already published");
+        Signature signature=null;
+        try {
+            signature = this.sign(publisher, Role.PUBLISHER, passphrase);
+        }catch(VouchRoleException vre){
+
+        }catch (BadPassphraseException bpe) {
+            throw bpe;
+        }
+        this.publisher=publisher;
+        return signature;
     }
 
     public List<Profile> getTaggers() {
@@ -182,11 +245,7 @@ public class Voucher implements Vouched {
         return parent;
     }
 
-    public void setParent(Voucher parent) {
-        this.parent = parent;
-    }
-
-    public Voucher getPrevious() {
+   public Voucher getPrevious() {
         return previous;
     }
 
@@ -202,12 +261,11 @@ public class Voucher implements Vouched {
         this.next = next;
     }
 
-    public String getContent() {
+    public Content getContent() {
         return content;
     }
-
-    public void setContent(String content) {
-        this.content = content;
+    private void setContent(Content content){
+        this.content=content;
     }
 
     public BigBinary getId(){
@@ -215,7 +273,7 @@ public class Voucher implements Vouched {
     }
 
     @Override
-    public Credibility getCredibility() {
+    public Credibility getCredibility(Self self) {
         return null;
     }
 }

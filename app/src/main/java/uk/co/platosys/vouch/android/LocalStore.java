@@ -1,6 +1,8 @@
 package uk.co.platosys.vouch.android;
 
 
+import android.database.sqlite.SQLiteDatabase;
+
 import androidx.room.RoomDatabase;
 
 import java.util.Iterator;
@@ -22,15 +24,23 @@ import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
 import uk.co.platosys.vouch.VoucherID;
+import uk.co.platosys.vouch.android.VouchConstants;
 
+
+/**This is an implementation of the Vouch Store interface working on the Android device itself. Data
+ * is stored in a SQLite database on the device, using the Room object persistence library.
+ *
+ */
 public class LocalStore  implements Store  {
     private char[] passphrase;
     private Lock lock;
     private Key key;
     private Self self;
+    private SQLiteDatabase database;
 
     /**
-     * Self is the profile of the operator of this Store.
+     * Self is the profile of the operator of this Store. It should be a separate Profile with a separate
+     * Lock and Key to any user of the system.
      * @param self
      * @param lock
      * @param key
@@ -39,10 +49,12 @@ public class LocalStore  implements Store  {
     public LocalStore(Self self, Lock lock, Key key, char[] passphrase){
         this.passphrase=passphrase;
         this.self=self;
+
     }
     @Override
     public Signature store(Voucher voucher) {
         try {
+
             return voucher.sign(self, Role.STORE, passphrase);
         }catch(VouchRoleException vre){
             //TODO

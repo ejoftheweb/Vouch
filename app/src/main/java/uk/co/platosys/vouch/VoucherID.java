@@ -5,7 +5,7 @@ import java.text.ParseException;
 import uk.co.platosys.minigma.BigBinary;
 
 /**
- * A Voucher's ID can be deduced from its immutable content, of which it is a hash.
+ * A Voucher's ID can be deduced from its immutable content and its parent's ID, the concantenation of which it is a hash.
  * Underneath, it is therefore just a big binary number, from which it is instantiated although
  * it can also be instantiated from a String, in which form it is frequently stored in
  * storage systems which do not natively support the storage of arbitrary-precision big integers.
