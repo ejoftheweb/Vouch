@@ -9,8 +9,16 @@ package uk.co.platosys.vouch;
  */
 public class Content {
     private String text;
-    private Content (){}
+     Content (){}
 
+    /**Takes a base-64 encoded String representation of the Content as
+     * typically stored in a database.
+     *
+     * @param encodedContent
+     */
+    public Content (String encodedContent){
+         //TODO
+    }
     public static Content createContent(String text){
         Content content=new Content();
         content.setText(text);

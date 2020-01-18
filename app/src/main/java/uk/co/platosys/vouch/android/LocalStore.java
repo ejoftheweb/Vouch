@@ -3,8 +3,8 @@ package uk.co.platosys.vouch.android;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import androidx.room.RoomDatabase;
-
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +15,8 @@ import uk.co.platosys.minigma.Signature;
 import uk.co.platosys.minigma.exceptions.BadPassphraseException;
 import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
+import uk.co.platosys.vouch.Content;
+import uk.co.platosys.vouch.Exceptions.IDVerificationException;
 import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
 import uk.co.platosys.vouch.Group;
@@ -24,7 +26,9 @@ import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
 import uk.co.platosys.vouch.VoucherID;
-import uk.co.platosys.vouch.android.VouchConstants;
+import uk.co.platosys.vouch.android.room.Signatures;
+import uk.co.platosys.vouch.android.room.StoreDao;
+import uk.co.platosys.vouch.android.room.VoucherEntity;
 
 
 /**This is an implementation of the Vouch Store interface working on the Android device itself. Data
@@ -37,6 +41,8 @@ public class LocalStore  implements Store  {
     private Key key;
     private Self self;
     private SQLiteDatabase database;
+    private List<Store> remoteStores;
+    private StoreDao storeDao;
 
     /**
      * Self is the profile of the operator of this Store. It should be a separate Profile with a separate
@@ -67,37 +73,76 @@ public class LocalStore  implements Store  {
 
     @Override
     public Signature store(Profile profile) {
+        //TODO
         return null;
     }
 
     @Override
     public Signature store(Group group) {
+        //TODO
         return null;
     }
 
     @Override
     public Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException {
+        //TODO
         return null;
     }
 
     @Override
     public Group getGroup(VoucherID voucherID) throws VoucherNotFoundException {
+        //TODO
         return null;
     }
 
     @Override
     public List<Profile> getProfiles(String name) {
+        //TODO
         return null;
     }
 
     @Override
     public List<Group> getGroups(String name) {
+        //TODO
         return null;
     }
 
     @Override
     public Voucher getVoucher(VoucherID voucherID) throws VoucherNotFoundException {
-        return null;
+        try{
+            VoucherEntity voucherEntity = storeDao.getVoucherEntity(voucherID.toString());
+            List<String> signatureStrings = storeDao.getSignatures(voucherID.toString());
+            List<Signature> signatures = new ArrayList<>();
+            for(String signatureString:signatureStrings){signatures.add(new Signature(signatureString));}
+            if(voucherEntity==null) {
+                throw new VoucherNotFoundException("voucher not found locally");
+            }
+            return new Voucher(voucherID,
+                    voucherEntity.title,
+                    voucherEntity.tweet,
+                    new VoucherID (voucherEntity.author),
+                    new VoucherID (voucherEntity.publisher),
+                    signatures,
+                    new VoucherID (voucherEntity.parent),
+                    new VoucherID (voucherEntity.previous),
+                    new VoucherID (voucherEntity.next),
+                    new Content (voucherEntity.content),
+                    this);
+
+        }catch(VoucherNotFoundException vnx){
+             for(Store remoteStore:remoteStores) {
+                 try{
+                     return remoteStore.getVoucher(voucherID);
+                 }catch (VoucherNotFoundException vnxe) {
+                     //do nothing
+                 }
+             }
+             throw new VoucherNotFoundException("voucher not found remotely or locally", vnx);
+        }catch(IDVerificationException idve){
+            throw new VoucherNotFoundException("voucher failed verification", idve);
+        }catch(ParseException px) {
+            throw new VoucherNotFoundException("parse error remaking voucher or one of its components", px);
+        }
     }
 
     @Override
@@ -167,5 +212,9 @@ public class LocalStore  implements Store  {
     @Override
     public int getCount() {
         return 0;
+    }
+    @Override
+    public void addRemoteStore(Store store){
+        remoteStores.add(store);
     }
 }

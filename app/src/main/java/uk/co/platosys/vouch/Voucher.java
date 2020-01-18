@@ -15,33 +15,97 @@ import uk.co.platosys.minigma.exceptions.BadPassphraseException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 import uk.co.platosys.minigma.exceptions.MinigmaOtherException;
 import uk.co.platosys.vouch.Exceptions.AlreadyPublishedException;
+import uk.co.platosys.vouch.Exceptions.IDVerificationException;
 import uk.co.platosys.vouch.Exceptions.VouchException;
 import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
 
 
 public class Voucher implements Vouched {
-    BigBinary id;
+    VoucherID id;
     String title;
     String tweet;
-    Profile author;
-    Profile publisher;
-    List<Profile> recipients;
-    List<Profile> taggers;
+    VoucherID author;
+    VoucherID publisher;
+    List<VoucherID> recipients;
+    List<VoucherID> taggers;
     List<Signature> signatures;
     List<Tag> tags;
-    Voucher parent;
-    Voucher previous;
-    Voucher next;
+    VoucherID parent;
+    VoucherID previous;
+    VoucherID next;
     Content content;
     Store store;
 
-    /**Package-protected method to instantiate an empty Voucher.
+
+    /**Constructor typically called by Store implementations to instantiate a Voucher
+     * from the store.
+     *
+     * @param id
+     * @param title
+     * @param tweet
+     * @param author
+     * @param publisher
+
+     * @param signatures
+     *
+     * @param parent
+     * @param previous
+     * @param next
+     * @param content
      * @param store
+     * @throws IDVerificationException
      */
-    protected Voucher(Store store, Voucher parent){
+    public Voucher (VoucherID id,
+                    String title,
+                    String tweet,
+                    VoucherID author,
+                    VoucherID publisher,
+
+                    List<Signature> signatures,
+                    //List<Tag> tags,
+                    VoucherID parent,
+                    VoucherID previous,
+                    VoucherID next,
+                    Content content,
+                    Store store)
+            throws IDVerificationException
+    {
+
+        this.title=title;
+        this.tweet=tweet;
+        this.author=author;
+        this.publisher=publisher;
+        this.signatures=signatures;
+        //this.tags=tags;
+        this.parent=parent;
+        this.previous=previous;
+        this.next=next;
+        this.content=content;
         this.store=store;
+        if(id==calculateId()) {
+            this.id=id;
+        }else{
+            throw new IDVerificationException("VoucherIDs don't match, content tampered or corrupted");
+        }
+        /*The tags are encoded into the Signature objects as Notations. So we have to extract them for
+        display*/
+        for(Signature signature:signatures){
+            for (Notation notation:signature.getNotations()) {
+                tags.add(new Tag(notation));
+            }
+        }
     }
+
+    /**Protected constructor called by the subclasses
+     *
+     * @param store
+     * @param parent
+     */
+      protected  Voucher (Store store, VoucherID parent){
+            this.store=store;
+            this.parent=parent;
+      }
 
     /**Static method used to get a Voucher from a store. Alternatively, call getVoucher(VoucherID) on the
      * Store object which is all this method does.
@@ -65,7 +129,7 @@ public class Voucher implements Vouched {
      * @return
      */
     public static Voucher createVoucher (Store store,
-                                         Voucher parent,
+                                         VoucherID parent,
                                          String title,
                                          String tweet,
                                          Self author,
@@ -115,18 +179,20 @@ public class Voucher implements Vouched {
                if(!role.equals(Role.AUTHOR)){
                    throw new VouchRoleException("voucher must be signed by author first");
                }
-               this.author=self;
+               this.author=self.id;
            }else if(role.equals(Role.AUTHOR)){
                throw new VouchRoleException("someone has already claimed authorship for this voucher");
            }
-           setId();//method does nothing if the id has already been set.
+           if(id==null){
+               id=calculateId();
+           }
            Key key = self.getKey();
            Tag tag = new Tag(Tag.ROLE,role.getName());
            this.tags.add(tag);
            List<Notation> notations = new ArrayList<>();
            notations.add(tag.toNotation());
            Signature signature = key.sign(content.toString(), notations, passphrase);
-           this.taggers.add(self);
+           this.taggers.add(self.id);
            signatures.add(signature);
            return signature;
        }catch(BadPassphraseException bpe) {
@@ -173,15 +239,13 @@ public class Voucher implements Vouched {
      * Note the algorithm used to generate the id. Might want to tighten this up.
      *
      */
-    private void setId() {
-        if (id==null) {
-            try {
-                String digestedContent = parent.getId().toString() + content.toString();
-                this.id = Digester.digest(digestedContent);
-            } catch (MinigmaException mx) {
-                //TODO
-            }
-        }//else it's already set, we don't need to do anything. Don't waste cycles.
+    private VoucherID calculateId() {
+        try{
+            String digestedContent = parent.toString() + content.toString();
+            return new VoucherID(Digester.digest(digestedContent));
+        }catch (MinigmaException mx) {
+            return null;
+        }
     }
 
 
@@ -203,16 +267,16 @@ public class Voucher implements Vouched {
         this.tweet = tweet;
     }
 
-    public Profile getAuthor() {
-        return author;
+    public Profile getAuthorProfile()  throws VoucherNotFoundException{
+        return store.getProfile(author);
     }
 
     public void setAuthor(Profile author) {
-        this.author = author;
+        this.author = author.id;
     }
 
-    public Profile getPublisher() {
-        return publisher;
+    public Profile getPublisherProfile()throws VoucherNotFoundException {
+        return store.getProfile(publisher);
     }
 
     public Signature publish(Self publisher, char[] passphrase) throws AlreadyPublishedException, BadPassphraseException {
@@ -225,11 +289,11 @@ public class Voucher implements Vouched {
         }catch (BadPassphraseException bpe) {
             throw bpe;
         }
-        this.publisher=publisher;
+        this.publisher=publisher.id;
         return signature;
     }
 
-    public List<Profile> getTaggers() {
+    public List<VoucherID> getTaggers() {
         return taggers;
     }
 
@@ -241,23 +305,23 @@ public class Voucher implements Vouched {
         return null;
     }
 
-    public Voucher getParent() {
-        return parent;
+    public Voucher getParentVoucher() throws VoucherNotFoundException {
+        return getVoucher(store, parent);
     }
 
-   public Voucher getPrevious() {
-        return previous;
+   public Voucher getPreviousVoucher() throws VoucherNotFoundException {
+        return getVoucher(store, previous);
     }
 
-    public void setPrevious(Voucher previous) {
+    public void setPrevious(VoucherID previous) {
         this.previous = previous;
     }
 
-    public Voucher getNext() {
-        return next;
+    public Voucher getNextVoucher() throws VoucherNotFoundException {
+        return getVoucher(store, next);
     }
 
-    public void setNext(Voucher next) {
+    public void setNext(VoucherID next) {
         this.next = next;
     }
 
@@ -268,7 +332,7 @@ public class Voucher implements Vouched {
         this.content=content;
     }
 
-    public BigBinary getId(){
+    public VoucherID getId(){
            return id;
     }
 

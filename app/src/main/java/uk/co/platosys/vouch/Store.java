@@ -93,5 +93,9 @@ public interface Store extends LockStore {
      * @return
      */
     Lock getLock();
+    /**
+     *
+     */
+    void addRemoteStore(Store store);
 
 }

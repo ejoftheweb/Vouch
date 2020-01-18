@@ -1,4 +1,4 @@
-package uk.co.platosys.vouch.android;
+package uk.co.platosys.vouch.android.room;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
@@ -6,7 +6,7 @@ import androidx.room.Relation;
 import java.util.List;
 
 /** This is an Android Room definition of the one-to-many relationship between Vouchers and their
- *  Signatures. 
+ *  Signatures.
  *
  */
 
