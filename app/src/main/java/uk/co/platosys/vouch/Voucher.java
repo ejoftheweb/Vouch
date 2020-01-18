@@ -91,8 +91,9 @@ public class Voucher implements Vouched {
         /*The tags are encoded into the Signature objects as Notations. So we have to extract them for
         display*/
         for(Signature signature:signatures){
+            VoucherID tagger = Vouch.getSignerProfileID(signature);
             for (Notation notation:signature.getNotations()) {
-                tags.add(new Tag(notation));
+                tags.add(new Tag(tagger, notation));
             }
         }
     }
@@ -187,7 +188,7 @@ public class Voucher implements Vouched {
                id=calculateId();
            }
            Key key = self.getKey();
-           Tag tag = new Tag(Tag.ROLE,role.getName());
+           Tag tag = new Tag(self.id, Tag.ROLE,role.getName());
            this.tags.add(tag);
            List<Notation> notations = new ArrayList<>();
            notations.add(tag.toNotation());
@@ -230,7 +231,7 @@ public class Voucher implements Vouched {
             signatures.add(signature);
             notations=signature.getNotations();
             for (Notation notation:notations){
-                this.tags.add(new Tag(notation));
+                this.tags.add(new Tag(self.id, notation));
             }
         }
         return signature;

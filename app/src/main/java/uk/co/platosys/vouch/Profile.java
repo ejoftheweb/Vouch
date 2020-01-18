@@ -36,7 +36,7 @@ public class Profile extends Voucher implements Voter {
      * @param tweet
      * @param author
      * @param publisher
-    
+
      * @param signatures
      *
      * @param parent
