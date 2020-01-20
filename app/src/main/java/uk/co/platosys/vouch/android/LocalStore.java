@@ -34,6 +34,9 @@ import uk.co.platosys.vouch.android.room.VoucherEntity;
 /**This is an implementation of the Vouch Store interface working on the Android device itself. Data
  * is stored in a SQLite database on the device, using the Room object persistence library.
  *
+ * In addition it provides asynchronous versions of all the store/retrieve  methods which should be used in
+ * place of the synchronous ones for all calls from the UI thread.
+ *
  */
 public class LocalStore  implements Store  {
     private char[] passphrase;
@@ -69,6 +72,9 @@ public class LocalStore  implements Store  {
             //TODO
             return null;
         }
+    }
+    public void storeAsync(Voucher voucher, SignatureCallback callback){
+
     }
 
     @Override

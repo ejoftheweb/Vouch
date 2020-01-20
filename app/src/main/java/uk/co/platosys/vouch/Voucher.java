@@ -34,6 +34,7 @@ public class Voucher implements Vouched {
     VoucherID parent;
     VoucherID previous;
     VoucherID next;
+    VoucherID advert;
     Content content;
     Store store;
 
@@ -249,9 +250,6 @@ public class Voucher implements Vouched {
         }
     }
 
-
-
-
     public String getTitle() {
         return title;
     }
@@ -340,5 +338,10 @@ public class Voucher implements Vouched {
     @Override
     public Credibility getCredibility(Self self) {
         return null;
+    }
+
+    public void setAdvert(VoucherID advert, Self publisher, char[] passphrase){
+        this.advert=advert;
+        //TODO
     }
 }

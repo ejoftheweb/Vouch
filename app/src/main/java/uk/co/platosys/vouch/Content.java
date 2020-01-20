@@ -7,23 +7,22 @@ package uk.co.platosys.vouch;
  *
  *
  */
-public class Content {
+public  class Content {
     private String text;
      Content (){}
+    String encodedContent;
 
     /**Takes a base-64 encoded String representation of the Content as
-     * typically stored in a database.
+     * typically stored in a database. This is the method used by Store
+     * implementations to return Vouchers. 
      *
      * @param encodedContent
      */
     public Content (String encodedContent){
+        this.encodedContent=encodedContent;
          //TODO
     }
-    public static Content createContent(String text){
-        Content content=new Content();
-        content.setText(text);
-        return content;
-    }
+
     private void setText(String text){
         this.text=text;
     }
