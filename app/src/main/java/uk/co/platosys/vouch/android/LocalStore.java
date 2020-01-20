@@ -82,17 +82,24 @@ public class LocalStore  implements Store  {
         //TODO
         return null;
     }
+    public void storeAsync(Profile profile, SignatureCallback callback){
 
+    }
     @Override
     public Signature store(Group group) {
         //TODO
         return null;
     }
+    public void storeAsync(Group group, SignatureCallback callback){
 
+    }
     @Override
     public Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException {
         //TODO
         return null;
+    }
+    public void getProfileAsync(VoucherID voucherID, ProfileCallback profileCallback){
+        //TODO
     }
 
     @Override
@@ -150,7 +157,9 @@ public class LocalStore  implements Store  {
             throw new VoucherNotFoundException("parse error remaking voucher or one of its components", px);
         }
     }
+ public void getVoucherAsync(VoucherID voucherID, VoucherCallback voucherCallback){
 
+ }
     @Override
     public List<Voucher> findVouchers(String[] searchTerms) {
         return null;

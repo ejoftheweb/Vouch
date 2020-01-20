@@ -14,7 +14,7 @@ public  class Content {
 
     /**Takes a base-64 encoded String representation of the Content as
      * typically stored in a database. This is the method used by Store
-     * implementations to return Vouchers. 
+     * implementations to return Vouchers.
      *
      * @param encodedContent
      */
