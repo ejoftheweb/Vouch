@@ -1,6 +1,8 @@
 package uk.co.platosys.vouch;
 
 
+import java.util.List;
+
 import uk.co.platosys.minigma.BigBinary;
 import uk.co.platosys.minigma.Key;
 import uk.co.platosys.minigma.Lock;
@@ -10,23 +12,80 @@ import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 import uk.co.platosys.minigma.votes.Officer;
 import uk.co.platosys.minigma.votes.Voter;
+import uk.co.platosys.vouch.Exceptions.IDVerificationException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
 
 
 /** A Profile is a Voucher that relates to a person (sole or corporate)
+ * A Profile has a userID which is a String. and should  be an email address.
  *
+ *
+ * A Profile also has a Lock.
  *
  */
 public class Profile extends Voucher implements Voter {
   Lock lock;
   String userID;
+  BigBinary paper;
 
-    /**The constructor is private.
+  /**Public constructor typically called by Store implementations to instantiate a Profile
+     * from the store.
+     *
+     * @param id
+     * @param title
+     * @param tweet
+     * @param author
+     * @param publisher
+
+     * @param signatures
+     *
+     * @param parent
+     * @param previous
+     * @param next
+     * @param content
+     * @param store
+     * @param userID
+     * @throws IDVerificationException
+     */
+    public Profile (VoucherID id,
+                    String title,
+                    String tweet,
+                    VoucherID author,
+                    VoucherID publisher,
+
+                    List<Signature> signatures,
+                    VoucherID parent,
+                    VoucherID previous,
+                    VoucherID next,
+                    Content content,
+                    Store store,
+                    String userID)
+            throws IDVerificationException {
+        super(  id,
+                title,
+                tweet,
+                author,
+                publisher,
+
+                signatures,
+                parent,
+                previous,
+                next,
+                content,
+                store
+        );
+        this.userID=userID;
+        this.lock=getLock();
+    }
+
+
+
+  /**The constructor is private.
      *
      * @param store
      * @param parent
      */
-  protected Profile(Store store, Voucher parent){
+  protected Profile(Store store, VoucherID parent){
       super( store,  parent);
   }
 
@@ -50,7 +109,7 @@ public class Profile extends Voucher implements Voter {
 
     @Override
     public BigBinary getPaper() {
-        return null;
+        return paper;
     }
 
     @Override
@@ -60,6 +119,8 @@ public class Profile extends Voucher implements Voter {
 
     @Override
     public void notify(BigBinary paper, Officer officer, Signature signature) {
+
+      this.paper=paper;
 
     }
 
@@ -77,7 +138,7 @@ public class Profile extends Voucher implements Voter {
      * @throws BadPassphraseException
      */
     public static Profile createProfile(Store store,
-                                        Voucher parent,
+                                        VoucherID parent,
                                         String name,
                                         String content,
                                         Lock lock,

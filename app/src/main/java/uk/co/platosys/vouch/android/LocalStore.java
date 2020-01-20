@@ -1,8 +1,10 @@
 package uk.co.platosys.vouch.android;
 
 
-import androidx.room.RoomDatabase;
+import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +15,8 @@ import uk.co.platosys.minigma.Signature;
 import uk.co.platosys.minigma.exceptions.BadPassphraseException;
 import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
+import uk.co.platosys.vouch.Content;
+import uk.co.platosys.vouch.Exceptions.IDVerificationException;
 import uk.co.platosys.vouch.Exceptions.VouchRoleException;
 import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
 import uk.co.platosys.vouch.Group;
@@ -22,15 +26,30 @@ import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
 import uk.co.platosys.vouch.VoucherID;
+import uk.co.platosys.vouch.android.room.Signatures;
+import uk.co.platosys.vouch.android.room.StoreDao;
+import uk.co.platosys.vouch.android.room.VoucherEntity;
 
+
+/**This is an implementation of the Vouch Store interface working on the Android device itself. Data
+ * is stored in a SQLite database on the device, using the Room object persistence library.
+ *
+ * In addition it provides asynchronous versions of all the store/retrieve  methods which should be used in
+ * place of the synchronous ones for all calls from the UI thread.
+ *
+ */
 public class LocalStore  implements Store  {
     private char[] passphrase;
     private Lock lock;
     private Key key;
     private Self self;
+    private SQLiteDatabase database;
+    private List<Store> remoteStores;
+    private StoreDao storeDao;
 
     /**
-     * Self is the profile of the operator of this Store.
+     * Self is the profile of the operator of this Store. It should be a separate Profile with a separate
+     * Lock and Key to any user of the system.
      * @param self
      * @param lock
      * @param key
@@ -39,10 +58,12 @@ public class LocalStore  implements Store  {
     public LocalStore(Self self, Lock lock, Key key, char[] passphrase){
         this.passphrase=passphrase;
         this.self=self;
+
     }
     @Override
     public Signature store(Voucher voucher) {
         try {
+
             return voucher.sign(self, Role.STORE, passphrase);
         }catch(VouchRoleException vre){
             //TODO
@@ -52,42 +73,93 @@ public class LocalStore  implements Store  {
             return null;
         }
     }
+    public void storeAsync(Voucher voucher, SignatureCallback callback){
+
+    }
 
     @Override
     public Signature store(Profile profile) {
+        //TODO
         return null;
     }
+    public void storeAsync(Profile profile, SignatureCallback callback){
 
+    }
     @Override
     public Signature store(Group group) {
+        //TODO
         return null;
     }
+    public void storeAsync(Group group, SignatureCallback callback){
 
+    }
     @Override
     public Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException {
+        //TODO
         return null;
+    }
+    public void getProfileAsync(VoucherID voucherID, ProfileCallback profileCallback){
+        //TODO
     }
 
     @Override
     public Group getGroup(VoucherID voucherID) throws VoucherNotFoundException {
+        //TODO
         return null;
     }
 
     @Override
     public List<Profile> getProfiles(String name) {
+        //TODO
         return null;
     }
 
     @Override
     public List<Group> getGroups(String name) {
+        //TODO
         return null;
     }
 
     @Override
     public Voucher getVoucher(VoucherID voucherID) throws VoucherNotFoundException {
-        return null;
-    }
+        try{
+            VoucherEntity voucherEntity = storeDao.getVoucherEntity(voucherID.toString());
+            List<String> signatureStrings = storeDao.getSignatures(voucherID.toString());
+            List<Signature> signatures = new ArrayList<>();
+            for(String signatureString:signatureStrings){signatures.add(new Signature(signatureString));}
+            if(voucherEntity==null) {
+                throw new VoucherNotFoundException("voucher not found locally");
+            }
+            return new Voucher(voucherID,
+                    voucherEntity.title,
+                    voucherEntity.tweet,
+                    new VoucherID (voucherEntity.author),
+                    new VoucherID (voucherEntity.publisher),
+                    signatures,
+                    new VoucherID (voucherEntity.parent),
+                    new VoucherID (voucherEntity.previous),
+                    new VoucherID (voucherEntity.next),
+                    new Content (voucherEntity.content),
+                    this);
 
+        }catch(VoucherNotFoundException vnx){
+             for(Store remoteStore:remoteStores) {
+                 try{
+                     return remoteStore.getVoucher(voucherID);
+                 }catch (VoucherNotFoundException vnxe) {
+                     //do nothing
+                 }
+             }
+             throw new VoucherNotFoundException("voucher not found remotely or locally", vnx);
+        }catch(IDVerificationException idve){
+            throw new VoucherNotFoundException("voucher failed verification", idve);
+        }catch(ParseException px) {
+            throw new VoucherNotFoundException("parse error remaking voucher or one of its components", px);
+        }
+    }
+ public void getVoucherAsync(VoucherID voucherID, VoucherCallback voucherCallback){
+
+ }
     @Override
     public List<Voucher> findVouchers(String[] searchTerms) {
         return null;
@@ -155,5 +227,9 @@ public class LocalStore  implements Store  {
     @Override
     public int getCount() {
         return 0;
+    }
+    @Override
+    public void addRemoteStore(Store store){
+        remoteStores.add(store);
     }
 }
