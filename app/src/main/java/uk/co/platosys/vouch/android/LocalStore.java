@@ -35,7 +35,8 @@ import uk.co.platosys.vouch.android.room.VoucherEntity;
  * is stored in a SQLite database on the device, using the Room object persistence library.
  *
  * In addition it provides asynchronous versions of all the store/retrieve  methods which should be used in
- * place of the synchronous ones for all calls from the UI thread.
+ * place of the synchronous ones for all calls from the UI thread. These have a void return type but
+ * take a callback argument,
  *
  */
 public class LocalStore  implements Store  {
@@ -66,15 +67,19 @@ public class LocalStore  implements Store  {
 
             return voucher.sign(self, Role.STORE, passphrase);
         }catch(VouchRoleException vre){
-            //TODO
+            //TODO log it
             return null;
         }catch (BadPassphraseException bpe){
-            //TODO
+            //TODO log it
             return null;
         }
     }
     public void storeAsync(Voucher voucher, SignatureCallback callback){
-
+        try{
+            callback.onSuccess(voucher.sign(self, Role.STORE, passphrase));
+        }catch(Exception ex) {
+            callback.onFailure(ex);
+        }
     }
 
     @Override
@@ -83,7 +88,7 @@ public class LocalStore  implements Store  {
         return null;
     }
     public void storeAsync(Profile profile, SignatureCallback callback){
-
+        //TODO
     }
     @Override
     public Signature store(Group group) {
@@ -91,7 +96,7 @@ public class LocalStore  implements Store  {
         return null;
     }
     public void storeAsync(Group group, SignatureCallback callback){
-
+        //TODO
     }
     @Override
     public Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException {
@@ -157,9 +162,13 @@ public class LocalStore  implements Store  {
             throw new VoucherNotFoundException("parse error remaking voucher or one of its components", px);
         }
     }
- public void getVoucherAsync(VoucherID voucherID, VoucherCallback voucherCallback){
-
- }
+     public void getVoucherAsync(VoucherID voucherID, VoucherCallback voucherCallback){
+        try{
+           voucherCallback.onSuccess(getVoucher(voucherID));
+        }catch(VoucherNotFoundException vne){
+            voucherCallback.onFailure(vne);
+        }
+     }
     @Override
     public List<Voucher> findVouchers(String[] searchTerms) {
         return null;
