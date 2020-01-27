@@ -26,6 +26,8 @@ import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
 import uk.co.platosys.vouch.VoucherID;
+import uk.co.platosys.vouch.android.room.LockEntity;
+import uk.co.platosys.vouch.android.room.LockStoreDao;
 import uk.co.platosys.vouch.android.room.Signatures;
 import uk.co.platosys.vouch.android.room.StoreDao;
 import uk.co.platosys.vouch.android.room.VoucherEntity;
@@ -47,6 +49,7 @@ public class LocalStore  implements Store  {
     private SQLiteDatabase database;
     private List<Store> remoteStores;
     private StoreDao storeDao;
+    private LockStoreDao lockStoreDao;
 
     /**
      * Self is the profile of the operator of this Store. It should be a separate Profile with a separate
@@ -59,6 +62,8 @@ public class LocalStore  implements Store  {
     public LocalStore(Self self, Lock lock, Key key, char[] passphrase){
         this.passphrase=passphrase;
         this.self=self;
+        this.lock=lock;
+        this.key=key;
 
     }
     @Override
@@ -185,7 +190,7 @@ public class LocalStore  implements Store  {
      */
     @Override
     public Lock getLock() {
-        return null;
+        return lock;
     }
 
     @Override
@@ -195,12 +200,23 @@ public class LocalStore  implements Store  {
 
     @Override
     public boolean removeLock(Fingerprint fingerprint) {
-        return false;
+        try {
+            lockStoreDao.deleteLock(fingerprint.toString());
+            return true;
+        }catch(Exception exception){
+            return false;
+        }
     }
 
     @Override
     public Lock getLock(Fingerprint fingerprint) {
-        return null;
+        LockEntity lockEntity = lockStoreDao.getLockEntityByFingerprint(fingerprint.toString());
+        try {
+            return new Lock(lockEntity.lock);
+        }catch(MinigmaException mx){
+            //TODO: log it
+            return null;
+        }
     }
 
     @Override
@@ -210,7 +226,13 @@ public class LocalStore  implements Store  {
 
     @Override
     public Lock getLock(String userID) throws MinigmaException, LockNotFoundException {
-        return null;
+        LockEntity lockEntity = lockStoreDao.getLockEntityByUser(userID);
+        try {
+            return new Lock(lockEntity.lock);
+        }catch(MinigmaException mx){
+            //TODO: log it
+            return null;
+        }
     }
 
     @Override

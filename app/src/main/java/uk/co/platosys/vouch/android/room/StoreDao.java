@@ -15,6 +15,6 @@ public interface StoreDao {
     @Query("SELECT * FROM VoucherEntity WHERE (id = :vouchid)")
     public VoucherEntity getVoucherEntity(String vouchid);
 
-    @Query("SELECT * FROM ProfileEntity WHERE(userID =:userID)")
+    @Query("SELECT * FROM ProfileEntity WHERE(user_id =:userID)")
     public ProfileEntity getProfileEntity (String userID);
 }

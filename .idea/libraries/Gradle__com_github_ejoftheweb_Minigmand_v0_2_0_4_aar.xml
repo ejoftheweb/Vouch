@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.ejoftheweb:Minigmand:v0.2.0.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.ejoftheweb/Minigmand/v0.2.0.4/ef4b68b63492886b755db22a10224c5004dc9845/Minigmand-v0.2.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
