@@ -1,5 +1,6 @@
 package uk.co.platosys.vouch.android.room;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -26,15 +27,15 @@ public class VoucherEntity {
    Content content;
    Store store;*/
 
-   @PrimaryKey
+   @PrimaryKey @NonNull
    public String id; //big binary as string
    public String title;
    public String tweet;
    public String author; //profile id. bbastring
    public String publisher;//profile id. bbastring
-   public List<String> recipients;
-   public List<String> taggers;
-   public List<String> signatures;
+   //public List<String> recipients;
+   //public List<String> taggers;
+   //public List<String> signatures;
    public String parent;
    public String previous;
    public String next;

@@ -28,7 +28,7 @@ public class Group extends Profile {
     Set<Profile> admins=new HashSet<>();
     boolean needsApproval = false;
 
-    private Group(Store store, Profile founder){
+    private Group(Store store, VoucherID founder){
         super (store, founder);
     }
 
@@ -57,10 +57,10 @@ public class Group extends Profile {
      * @throws BadPassphraseException
      */
     public static Group createGroup(Store store,
-                                    Self founder,
+                                    VoucherID founder,
                                     String title,
                                     String tweet,
-                                    String content,
+                                    Content content,
                                     boolean needsApproval,
                                     char[] passphrase) throws BadPassphraseException{
         Group group = new Group(store, founder);
@@ -74,23 +74,28 @@ public class Group extends Profile {
 
     }
 
-    private Signature create(Self self, Store store, char[] passphrase) throws BadPassphraseException {
+    private Signature create(VoucherID selfid, Store store, char[] passphrase) throws BadPassphraseException {
         Signature signature=null;
         try {
-            signatures.add(self.getKey().sign(getContent(), passphrase));
+            Self self = store.getSelf(selfid);
+            signatures.add(self.getKey().sign(getContent().toString(), passphrase));
             members.add(self);
             admins.add(self);
 
             return store.store(this);
+        }catch(VoucherNotFoundException vnfe) {
+            //TODO
+            return null;
         }catch(MinigmaException moe){
+            //TODO
             return null;
         }
-
     }
+
     public Signature join(Self self, Store store, char[] passphrase) throws BadPassphraseException {
         Signature signature=null;
         try {
-            signatures.add(self.getKey().sign(getContent(), passphrase));
+            signatures.add(self.getKey().sign(getContent().toString(), passphrase));
             members.add(self);
             return store.store(this);
         }catch(MinigmaException moe){

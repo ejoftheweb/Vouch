@@ -113,6 +113,11 @@ public class LocalStore  implements Store  {
     }
 
     @Override
+    public Self getSelf(VoucherID voucherID) throws VoucherNotFoundException {
+        return null;
+    }
+
+    @Override
     public Group getGroup(VoucherID voucherID) throws VoucherNotFoundException {
         //TODO
         return null;

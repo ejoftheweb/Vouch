@@ -254,7 +254,7 @@ public class Voucher implements Vouched {
         return title;
     }
 
-   private void setTitle(String title) {
+   protected void setTitle(String title) {
         this.title = title;
     }
 
@@ -262,7 +262,7 @@ public class Voucher implements Vouched {
         return tweet;
     }
 
-   private void setTweet(String tweet) {
+   protected void setTweet(String tweet) {
         this.tweet = tweet;
     }
 
@@ -270,8 +270,8 @@ public class Voucher implements Vouched {
         return store.getProfile(author);
     }
 
-    public void setAuthor(Profile author) {
-        this.author = author.id;
+    public void setAuthor(VoucherID author) {
+        this.author = author;
     }
 
     public Profile getPublisherProfile()throws VoucherNotFoundException {
@@ -327,7 +327,7 @@ public class Voucher implements Vouched {
     public Content getContent() {
         return content;
     }
-    private void setContent(Content content){
+    protected void setContent(Content content){
         this.content=content;
     }
 

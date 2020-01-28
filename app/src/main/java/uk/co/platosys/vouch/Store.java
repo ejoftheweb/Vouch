@@ -50,7 +50,7 @@ public interface Store extends LockStore {
      * @throws VoucherNotFoundException
      */
     Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException;
-
+Self getSelf(VoucherID voucherID) throws VoucherNotFoundException;
     /**
      * Retrieves the Group with the given ID
       * @param voucherID

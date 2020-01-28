@@ -14,7 +14,7 @@ public class Thread extends Voucher {
     private List<Voucher> thread;
     Iterator<Voucher> vouchers;
 
-    public Thread (Store store, Voucher parent){
+    public Thread (Store store, VoucherID parent){
         super(store, parent);
     }
     public Iterator<Voucher> getVouchers(){
