@@ -3,75 +3,97 @@
 3    package="uk.co.platosys.vouch.test" >
 4
 5    <uses-sdk
-5-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:5:5-74
+5-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:5:5-74
 6        android:minSdkVersion="15"
-6-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:5:15-41
+6-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:5:15-41
 7        android:targetSdkVersion="28" />
-7-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:5:42-71
+7-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:5:42-71
 8
 9    <instrumentation
-9-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:11:5-15:70
+9-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:11:5-15:75
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:11:22-76
+10-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:11:22-76
 11        android:functionalTest="false"
-11-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:14:22-52
+11-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:14:22-52
 12        android:handleProfiling="false"
-12-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:13:22-53
-13        android:label="Tests for uk.co.platosys.vouch"
-13-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:15:22-68
-14        android:targetPackage="uk.co.platosys.vouch" />
-14-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:12:22-66
+12-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:13:22-53
+13        android:label="Tests for uk.co.platosys.vouch.test"
+13-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:15:22-73
+14        android:targetPackage="uk.co.platosys.vouch.test" />
+14-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:12:22-71
 15
 16    <uses-permission android:name="android.permission.REORDER_TASKS" />
 16-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:24:5-72
 16-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:24:22-69
 17
-18    <application android:debuggable="true" >
-18-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:7:5-9:19
-18-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:7:18-43
-19        <uses-library android:name="android.test.runner" />
-19-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:8:9-60
-19-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3487347984321782672.xml:8:23-57
-20
-21        <activity
-21-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:27:9-33:20
-22            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
-22-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:28:13-99
-23            android:theme="@style/InstrumentationActivityInvokerBootstrapActivityTheme" >
-23-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:29:13-88
-24            <intent-filter>
-24-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
-25                <action android:name="android.intent.action.MAIN" />
-25-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
-25-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
-26            </intent-filter>
-27        </activity>
-28        <activity
-28-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:34:9-40:20
-29            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
-29-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:35:13-95
-30            android:theme="@style/InstrumentationActivityInvokerEmptyActivityTheme" >
-30-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:36:13-84
-31            <intent-filter>
-31-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
-32                <action android:name="android.intent.action.MAIN" />
-32-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
-32-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
-33            </intent-filter>
-34        </activity>
-35        <activity
-35-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:41:9-47:20
-36            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-36-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:42:13-103
-37            android:theme="@style/InstrumentationActivityInvokerFloatingActivityTheme" >
-37-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:43:13-87
-38            <intent-filter>
-38-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
-39                <action android:name="android.intent.action.MAIN" />
-39-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
-39-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
-40            </intent-filter>
-41        </activity>
-42    </application>
-43
-44</manifest>
+18    <application
+18-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:7:5-9:19
+19        android:allowBackup="true"
+19-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:12:9-35
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.0.1] /home/edward/.gradle/caches/transforms-2/files-2.1/8f8ab13dc8f4e84e14a8bb3d9ac92bc4/core-1.0.1/AndroidManifest.xml:22:18-86
+21        android:debuggable="true"
+21-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:7:18-43
+22        android:icon="@mipmap/ic_launcher"
+22-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:13:9-43
+23        android:label="@string/app_name"
+23-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:14:9-41
+24        android:roundIcon="@mipmap/ic_launcher_round"
+24-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:15:9-54
+25        android:supportsRtl="true"
+25-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:16:9-35
+26        android:theme="@style/AppTheme" >
+26-->[com.github.ejoftheweb:Minigmand:v0.2.0.5] /home/edward/.gradle/caches/transforms-2/files-2.1/50f9a2589a7fbf30fb8eac2da9e3579b/Minigmand-v0.2.0.4/AndroidManifest.xml:17:9-40
+27        <uses-library android:name="android.test.runner" />
+27-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:8:9-60
+27-->/home/edward/StudioProjects/Vouch/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3020597014661438788.xml:8:23-57
+28
+29        <activity
+29-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:27:9-33:20
+30            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+30-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:28:13-99
+31            android:theme="@style/InstrumentationActivityInvokerBootstrapActivityTheme" >
+31-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:29:13-88
+32            <intent-filter>
+32-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
+33-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
+34            </intent-filter>
+35        </activity>
+36        <activity
+36-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:34:9-40:20
+37            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+37-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:35:13-95
+38            android:theme="@style/InstrumentationActivityInvokerEmptyActivityTheme" >
+38-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:36:13-84
+39            <intent-filter>
+39-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
+40-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
+41            </intent-filter>
+42        </activity>
+43        <activity
+43-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:41:9-47:20
+44            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+44-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:42:13-103
+45            android:theme="@style/InstrumentationActivityInvokerFloatingActivityTheme" >
+45-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:43:13-87
+46            <intent-filter>
+46-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:30:13-32:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:17-69
+47-->[androidx.test:core:1.1.0] /home/edward/.gradle/caches/transforms-2/files-2.1/61e5e7e4c8c93d43f3f06edf87848d5f/core-1.1.0/AndroidManifest.xml:31:25-66
+48            </intent-filter>
+49        </activity>
+50
+51        <service
+51-->[androidx.room:room-runtime:2.2.3] /home/edward/.gradle/caches/transforms-2/files-2.1/5f03ae9a4ec8352b57fd369ab039a2f8/room-runtime-2.2.3/AndroidManifest.xml:25:9-27:40
+52            android:name="androidx.room.MultiInstanceInvalidationService"
+52-->[androidx.room:room-runtime:2.2.3] /home/edward/.gradle/caches/transforms-2/files-2.1/5f03ae9a4ec8352b57fd369ab039a2f8/room-runtime-2.2.3/AndroidManifest.xml:26:13-74
+53            android:exported="false" />
+53-->[androidx.room:room-runtime:2.2.3] /home/edward/.gradle/caches/transforms-2/files-2.1/5f03ae9a4ec8352b57fd369ab039a2f8/room-runtime-2.2.3/AndroidManifest.xml:27:13-37
+54    </application>
+55
+56</manifest>
