@@ -1,8 +1,6 @@
 package uk.co.platosys.vouch;
 
 
-import uk.co.platosys.vouch.Exceptions.CredibilityException;
-
 /** Central to the Vouch system is the credibility metric. Credibility is <b>subjective</b>,  that is, there
  * can be no authoritative objective credibility without a central Truth Arbiter, which smacks of dogmatic
  * totalitarianism.  But

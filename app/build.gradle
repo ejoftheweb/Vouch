@@ -1,9 +1,8 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "uk.co.platosys.vouch"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -23,9 +22,11 @@ repositories{
 }
 
 dependencies {
-    implementation 'com.github.ejoftheweb:Minigmand:v0.2.0.5'
+    implementation 'com.github.ejoftheweb:Minigmand:v0.2.0.10'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation group: 'org.jdom', name: 'jdom2', version: '2.0.6'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

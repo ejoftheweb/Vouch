@@ -15,10 +15,10 @@ import uk.co.platosys.minigma.Signature;
 import uk.co.platosys.minigma.exceptions.BadPassphraseException;
 import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
-import uk.co.platosys.vouch.Content;
-import uk.co.platosys.vouch.Exceptions.IDVerificationException;
-import uk.co.platosys.vouch.Exceptions.VouchRoleException;
-import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
+import uk.co.platosys.vouch.exceptions.IDVerificationException;
+import uk.co.platosys.vouch.exceptions.InvalidXMLException;
+import uk.co.platosys.vouch.exceptions.VouchRoleException;
+import uk.co.platosys.vouch.exceptions.VoucherNotFoundException;
 import uk.co.platosys.vouch.Group;
 import uk.co.platosys.vouch.Profile;
 import uk.co.platosys.vouch.Role;
@@ -26,9 +26,9 @@ import uk.co.platosys.vouch.Self;
 import uk.co.platosys.vouch.Store;
 import uk.co.platosys.vouch.Voucher;
 import uk.co.platosys.vouch.VoucherID;
+import uk.co.platosys.vouch.XmlContent;
 import uk.co.platosys.vouch.android.room.LockEntity;
 import uk.co.platosys.vouch.android.room.LockStoreDao;
-import uk.co.platosys.vouch.android.room.Signatures;
 import uk.co.platosys.vouch.android.room.StoreDao;
 import uk.co.platosys.vouch.android.room.VoucherEntity;
 
@@ -154,7 +154,7 @@ public class LocalStore  implements Store  {
                     new VoucherID (voucherEntity.parent),
                     new VoucherID (voucherEntity.previous),
                     new VoucherID (voucherEntity.next),
-                    new Content (voucherEntity.content),
+                    new XmlContent(voucherEntity.content),
                     this);
 
         }catch(VoucherNotFoundException vnx){
@@ -170,6 +170,8 @@ public class LocalStore  implements Store  {
             throw new VoucherNotFoundException("voucher failed verification", idve);
         }catch(ParseException px) {
             throw new VoucherNotFoundException("parse error remaking voucher or one of its components", px);
+        }catch(InvalidXMLException ixe){
+            throw new VoucherNotFoundException("voucher had invalid xml", ixe);
         }
     }
      public void getVoucherAsync(VoucherID voucherID, VoucherCallback voucherCallback){

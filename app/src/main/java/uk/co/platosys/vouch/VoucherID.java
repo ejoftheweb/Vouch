@@ -3,6 +3,7 @@ package uk.co.platosys.vouch;
 import java.text.ParseException;
 
 import uk.co.platosys.minigma.BigBinary;
+import uk.co.platosys.vouch.constants.Data;
 
 /**
  * A Voucher's ID can be deduced from its immutable content and its parent's ID, the concantenation of which it is a hash.
@@ -21,5 +22,16 @@ public class VoucherID {
     @Override
     public String toString(){
         return bigBinary.toString();
+    }
+
+    public static VoucherID getRootID(){
+        byte[] bytes = {0};
+        BigBinary vid=new BigBinary(bytes);
+        try{
+            vid=new BigBinary(Data.ROOT_ID);
+        }catch (ParseException  px){
+
+        }
+        return new VoucherID(vid);
     }
 }

@@ -2,12 +2,17 @@ package uk.co.platosys.vouch;
 
 /**Class representing the Content element of a Voucher.
  * A Voucher's content is *immutable*.
- * For now, this class just wraps some String text, but creating a separate class will
- * let us implement options for more richly-structured content for later on.
+ *
+ * A voucher's content consists of  an arbitrary amount
+ * of binary content as a base-64 String.
+ *
+ * This binary content, when decoded, is xml. But the canonical version is always the base64 text encoding
+ * it. This approach sidesteps the car-crash that is XML-canonicalisation
  *
  *
  */
-public  class Content {
+
+public  abstract class Content {
     private String text;
      Content (){}
     String encodedContent;
@@ -18,9 +23,9 @@ public  class Content {
      *
      * @param encodedContent
      */
-    public Content (String encodedContent){
-        this.encodedContent=encodedContent;
-         //TODO
+    public Content (String encodedContent)  {
+
+         this.encodedContent=encodedContent;
     }
 
     private void setText(String text){
@@ -32,7 +37,12 @@ public  class Content {
     @Override
     public String toString(){
         //TODO This method should return a Base64-encoding of the compressed content.
-        return text;
+        return encodedContent;
     }
-
+    /*
+    public static final String TEXT="AAAAAA";
+    public static final String THREAD="BBBBBB";
+    public static final String PROFILE="CCCCCC";
+    public static final String GROUP="DDDDDD";
+*/
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import uk.co.platosys.minigma.Lock;
 import uk.co.platosys.minigma.LockStore;
 import uk.co.platosys.minigma.Signature;
-import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
+import uk.co.platosys.vouch.exceptions.VoucherNotFoundException;
 
 /** Stores handle transport storage and retrieval of Vouchers**/
 public interface Store extends LockStore {
@@ -50,7 +50,7 @@ public interface Store extends LockStore {
      * @throws VoucherNotFoundException
      */
     Profile getProfile(VoucherID voucherID) throws VoucherNotFoundException;
-Self getSelf(VoucherID voucherID) throws VoucherNotFoundException;
+    Self getSelf(VoucherID voucherID) throws VoucherNotFoundException;
     /**
      * Retrieves the Group with the given ID
       * @param voucherID

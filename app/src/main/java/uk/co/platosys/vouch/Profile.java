@@ -12,15 +12,18 @@ import uk.co.platosys.minigma.exceptions.LockNotFoundException;
 import uk.co.platosys.minigma.exceptions.MinigmaException;
 import uk.co.platosys.minigma.votes.Officer;
 import uk.co.platosys.minigma.votes.Voter;
-import uk.co.platosys.vouch.Exceptions.IDVerificationException;
-import uk.co.platosys.vouch.Exceptions.VoucherNotFoundException;
+import uk.co.platosys.vouch.exceptions.IDVerificationException;
+import uk.co.platosys.vouch.exceptions.VoucherNotFoundException;
 
 
 /** A Profile is a Voucher that relates to a person (sole or corporate)
  * A Profile has a userID which is a String. and should  be an email address.
  *
  *
- * A Profile also has a Lock.
+ * A Profile also has a Lock (that is, a PGP public key). An application can instantiate a Profile, call its
+ * getLock() method and then (a) encrypt content so that it can only be decrypted by the Self corresponding to
+ * the Profile object; and (b) more significantly from the Vouch perspective, verify a digital signature against
+ * the given Lock.
  *
  */
 public class Profile extends Voucher implements Voter {
@@ -80,7 +83,7 @@ public class Profile extends Voucher implements Voter {
 
 
 
-  /**The constructor is private.
+  /**The constructor is protected, it is called by the Factory class
      *
      * @param store
      * @param parent
@@ -96,10 +99,11 @@ public class Profile extends Voucher implements Voter {
       }else{
           try {
               lock = store.getLock(userID);
-          }catch (MinigmaException mx) {
+
+          }catch(LockNotFoundException lnfx){
               //TODO
               return null;
-          }catch(LockNotFoundException lnfx){
+          }catch (MinigmaException mx) {
               //TODO
               return null;
           }
@@ -124,33 +128,7 @@ public class Profile extends Voucher implements Voter {
 
     }
 
-    /**Use this static method to create a new profile. A profile should but need not be created and signed by
-     * its subject.
-     *
-     * @param store
-     * @param parent
-     * @param name
-     * @param content
-     * @param lock
-     * @param key
-     * @param passphrase
-     * @return
-     * @throws BadPassphraseException
-     */
-    public static Profile createProfile(Store store,
-                                        VoucherID parent,
-                                        String name,
-                                        String content,
-                                        Lock lock,
-                                        Key key,
-                                        char[] passphrase)
-    throws BadPassphraseException {
-       Profile profile = new Profile(store, parent);
-       profile.lock=lock;
-       profile.title=name;
-       //TODO
-       return profile;
-    }
+
 
     /**
      * Use this static method to instantiate a profile when you know its ID

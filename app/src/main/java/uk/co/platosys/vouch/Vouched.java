@@ -8,6 +8,8 @@ public interface Vouched {
       * to calculate credibility. OTOH, we need to consider the gaming risk of allowing third-party calculations
       * of credibility....
       *
+      *
+      *
       * @param self
       * @return
       */

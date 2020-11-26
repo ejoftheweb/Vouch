@@ -4,7 +4,7 @@ import java.util.List;
 
 import uk.co.platosys.minigma.Key;
 import uk.co.platosys.minigma.Signature;
-import uk.co.platosys.vouch.Exceptions.IDVerificationException;
+import uk.co.platosys.vouch.exceptions.IDVerificationException;
 
 /**
  * The Self class is a Profile that relates to the currently-authenticated user of
@@ -45,7 +45,9 @@ public class Self extends Profile {
         );
         this.key=key;
     }
-
+    protected void setKey(Key key) {
+        this.key = key;
+    }
     public Key getKey() {
         return key;
     }
